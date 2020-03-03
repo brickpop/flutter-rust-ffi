@@ -1,0 +1,11 @@
+[package]
+name = "example-rs"
+version = "0.1.0"
+authors = ["Brick Pop <itsbrickpop@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "example"
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
