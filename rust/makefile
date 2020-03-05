@@ -22,11 +22,11 @@ help: makefile
 init: $(CARGO_CONFIG)
 	rustup target add aarch64-apple-ios armv7-apple-ios armv7s-apple-ios x86_64-apple-ios i386-apple-ios
 	rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
-	cargo install cargo-lipo
+	@if [ $$(uname) == "Darwin" ] ; then cargo install cargo-lipo ; fi
 	cargo install --force cbindgen
 
 $(CARGO_CONFIG):
-	if [ ! -f $(CARGO_CONFIG) ] ; then echo "Adapt cargo-config.toml and append it to $(CARGO_CONFIG)" ; fi
+	@if [ ! -f $(CARGO_CONFIG) ] ; then echo -e "\nNOTE: Adapt cargo-config.toml and append it to $(CARGO_CONFIG)\n" ; fi
 
 ## :
 
@@ -41,7 +41,10 @@ all: ios android bindings
 ios: target/universal/release/libexample.a
 
 target/universal/release/libexample.a: $(SOURCES) $(CARGO_CONFIG)
-	cargo lipo --release
+	@if [ $$(uname) == "Darwin" ] ; then \
+		cargo lipo --release ; \
+		else echo "Skipping iOS compilation on $$(uname)" ; \
+	fi
 
 ## android: Compile the android targets (arm64, armv7 and i686)
 android: target/aarch64-linux-android/release/libexample.so target/armv7-linux-androideabi/release/libexample.so target/i686-linux-android/release/libexample.so
@@ -80,4 +83,3 @@ clean:
 .PHONY: test
 test:
 	cargo test
-
