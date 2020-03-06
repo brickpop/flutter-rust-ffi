@@ -13,7 +13,7 @@ pub extern fn rust_greeting(to: *const c_char) -> *mut c_char {
 }
 
 #[no_mangle]
-pub extern fn rust_greeting_free(s: *mut c_char) {
+pub extern fn rust_cstr_free(s: *mut c_char) {
     unsafe {
         if s.is_null() { return }
         CString::from_raw(s)

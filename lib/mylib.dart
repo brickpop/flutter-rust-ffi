@@ -18,8 +18,8 @@ final Pointer<Utf8> Function(Pointer<Utf8>) rustGreeting = nativeExampleLib
         "rust_greeting")
     .asFunction();
 
-final void Function(Pointer<Utf8>) freeGreeting = nativeExampleLib
-    .lookup<NativeFunction<Void Function(Pointer<Utf8>)>>("rust_greeting_free")
+final void Function(Pointer<Utf8>) freeCString = nativeExampleLib
+    .lookup<NativeFunction<Void Function(Pointer<Utf8>)>>("rust_cstr_free")
     .asFunction();
 
 String nativeGreeting(String name) {
@@ -42,7 +42,7 @@ String nativeGreeting(String name) {
   // Free the string pointer, as we already have
   // an owned String to return
   print("- Freing the native char*");
-  freeGreeting(resultPointer);
+  freeCString(resultPointer);
 
   return greetingStr;
 }

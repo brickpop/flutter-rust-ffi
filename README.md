@@ -16,16 +16,23 @@ This template provides first class FFI support, **the clean way**.
 
 Edit your code within `rust/src/lib.rs` and add any dependencies you need.
 
-Make sure to annotate your exported functions with `#[no_mangle]` and `pub extern` so the function names can be dealt with by Dart.  
+Make sure to annotate your exported functions with `#[no_mangle]` and `pub extern` so the function names can be matched from Dart.
 
-Returning strings or structs may require using `unsafe` code. 
+Returning strings or structs may require using `unsafe` blocks. Returned strings or structs will need to be `free`'d from Dart.
 
 ### Compile the library
 
-- Ensure the NDK is installed
-- Adapt the paths from `cargo-config.toml` to your NDK installation and append them to your `~/.cargo/config` file
-- Set the name of your library in `Cargo.toml`
-- On the `rust` folder, run `make init` and `make all`
+- Make sure that the Android NDK is installed
+  - You might also need LLVM from the SDK manager
+- Ensure that the env variable `$ANDROID_NDK_HOME` points to the NDK base folder
+  - It may look like `/Users/brickpop/Library/Android/sdk/ndk-bundle` on MacOS
+  - And look like `/home/brickpop/dev/android/ndk-bundle` on Linux
+- On the `rust` folder:
+  - Run `make` to see the available actions
+  - Run `make init` to install the Rust targets
+  - Run `make all` to build the libraries and the `.h` file
+- Update the name of your library in `Cargo.toml`
+  - You'll need to update the symlinks to target the new file names. See iOS and Android below.
 
 Generated artifacts:
 - Android libraries
@@ -62,16 +69,16 @@ $ cd flutter/ios
 $ ln -s ../rust/target/universal/release/libexample.a .
 ```
 
-Append the function signatures from `rust/target/bindings.h` into `flutter/ios/Classes/MylibPlugin.h`
+Append the generated function signatures from `rust/target/bindings.h` into `flutter/ios/Classes/MylibPlugin.h`
 
 ```sh 
 $ cd flutter/ios
 $ cat ../rust/target/bindings.h >> Classes/MylibPlugin.h
 ```
 
-In our case, it will append `char *rust_greeting(const char *to);` and `void rust_greeting_free(char *s);`
+In our case, it will append `char *rust_greeting(const char *to);` and `void rust_cstr_free(char *s);`
 
-By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add a dummy method in `SwiftMylibPlugin.m` that uses at least one of the native functions:
+NOTE: By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add a dummy method in `SwiftMylibPlugin.m` that uses at least one of the native functions:
 
 ```kotlin
 ...
@@ -81,13 +88,13 @@ By default, XCode will skip bundling the `libexample.a` library if it detects th
 }
 ```
 
-If you are not using Flutter channels, the rest of methods can be left empty.
+If you won't be using Flutter channels, the rest of methods can be left empty.
 
 #### Android
 
 Similarly as we did on iOS with `libexample.a`, create symlinks pointing to the binary libraries on `rust/target`.
 
-Create the following structure on `flutter/android` for each architecture:
+You should have the following structure on `flutter/android` for each architecture:
 
 ```
 src
@@ -121,7 +128,7 @@ final Pointer<Utf8> Function(Pointer<Utf8>) rustGreeting = nativeExampleLib
     .asFunction();
 
 final void Function(Pointer<Utf8>) freeGreeting = nativeExampleLib
-    .lookup<NativeFunction<Void Function(Pointer<Utf8>)>>("rust_greeting_free")
+    .lookup<NativeFunction<Void Function(Pointer<Utf8>)>>("rust_cstr_free")
     .asFunction();
 ```
 
@@ -146,7 +153,8 @@ freeGreeting(resultPointer);
 ```
 
 ## More information
+- https://dart.dev/guides/libraries/c-interop
 - https://flutter.dev/docs/development/platform-integration/c-interop
+- https://github.com/dart-lang/samples/blob/master/ffi/structs/structs.dart
 - https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-06-rust-on-ios.html
 - https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html
-- https://github.com/dart-lang/samples/blob/master/ffi/structs/structs.dart
