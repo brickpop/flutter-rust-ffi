@@ -5,9 +5,12 @@ This project is a Flutter Plugin template.
 It provides out-of-the box support for cross-compiling native Rust code for all available iOS and Android architectures and call it from plain Dart using [Foreign Function Interface](https://en.wikipedia.org/wiki/Foreign_function_interface).
 
 This template provides first class FFI support, **the clean way**. 
-- No Swift or Kotlin wrappers
-- No message channels
-- No async calls
+- No Swift/Kotlin wrappers
+- No message passing
+- No async/await on Dart
+- Write once, use everywhere
+- No garbage collection
+- Mostly automated development
 - No need to export `aar` bundles or `.framework`'s
 
 ## Getting started
@@ -48,7 +51,7 @@ Generated artifacts:
 
 #### iOS
 
-Ensure that `rust/ios/mylib.podspec` includes the following directives:
+Ensure that `ios/mylib.podspec` includes the following directives:
 
 ```diff
 ...
@@ -78,7 +81,7 @@ $ cat ../rust/target/bindings.h >> Classes/MylibPlugin.h
 
 In our case, it will append `char *rust_greeting(const char *to);` and `void rust_cstr_free(char *s);`
 
-NOTE: By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add a dummy method in `SwiftMylibPlugin.m` that uses at least one of the native functions:
+NOTE: By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add a dummy method in `SwiftMylibPlugin.swift` that uses at least one of the native functions:
 
 ```kotlin
 ...
@@ -136,20 +139,20 @@ Call them:
 ```dart
 // Prepare the parameters
 final name = "John Smith";
-final Pointer<Utf8> arg1 = Utf8.toUtf8(name);
-print("- Calling rust_greeting with argument:  $arg1");
+final Pointer<Utf8> namePtr = Utf8.toUtf8(name);
+print("- Calling rust_greeting with argument:  $namePtr");
 
 // Call rust_greeting
-final Pointer<Utf8> resultPointer = rustGreeting(argName);
-print("- Result pointer:  $resultPointer");
+final Pointer<Utf8> resultPtr = rustGreeting(namePtr);
+print("- Result pointer:  $resultPtr");
 
-final String greetingStr = Utf8.fromUtf8(resultPointer);
+final String greetingStr = Utf8.fromUtf8(resultPtr);
 print("- Response string:  $greetingStr");
 ```
 
 When we are done using `greetingStr`, tell Rust to free it, since the Rust implementation kept it alive for us to use it.
 ```dart
-freeGreeting(resultPointer);
+freeGreeting(resultPtr);
 ```
 
 ## More information
