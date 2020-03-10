@@ -2,25 +2,46 @@ import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
 
-// Use typedef for more readable type definitions below
-// typedef greeting_func = Pointer<Utf8> Function(Pointer<Utf8>);
+///////////////////////////////////////////////////////////////////////////////
+// C bindings
+///////////////////////////////////////////////////////////////////////////////
 
+// void rust_cstr_free(char *s);
+// char *rust_greeting(const char *to);
+
+///////////////////////////////////////////////////////////////////////////////
+// Typedef's
+///////////////////////////////////////////////////////////////////////////////
+
+typedef RustGreetingFunc = Pointer<Utf8> Function(Pointer<Utf8>);
+typedef RustGreetingFuncNative = Pointer<Utf8> Function(Pointer<Utf8>);
+
+typedef FreeStringFunc = void Function(Pointer<Utf8>);
+typedef FreeStringFuncNative = Void Function(Pointer<Utf8>);
+
+///////////////////////////////////////////////////////////////////////////////
 // Load the library
+///////////////////////////////////////////////////////////////////////////////
 
 final DynamicLibrary nativeExampleLib = Platform.isAndroid
     ? DynamicLibrary.open("libexample.so")
     : DynamicLibrary.process();
 
-// Find the symbols we want to use
+///////////////////////////////////////////////////////////////////////////////
+// Locate the symbols we want to use
+///////////////////////////////////////////////////////////////////////////////
 
-final Pointer<Utf8> Function(Pointer<Utf8>) rustGreeting = nativeExampleLib
-    .lookup<NativeFunction<Pointer<Utf8> Function(Pointer<Utf8>)>>(
-        "rust_greeting")
+final RustGreetingFunc rustGreeting = nativeExampleLib
+    .lookup<NativeFunction<RustGreetingFuncNative>>("rust_greeting")
     .asFunction();
 
-final void Function(Pointer<Utf8>) freeCString = nativeExampleLib
-    .lookup<NativeFunction<Void Function(Pointer<Utf8>)>>("rust_cstr_free")
+final FreeStringFunc freeCString = nativeExampleLib
+    .lookup<NativeFunction<FreeStringFuncNative>>("rust_cstr_free")
     .asFunction();
+
+///////////////////////////////////////////////////////////////////////////////
+// HANDLERS
+///////////////////////////////////////////////////////////////////////////////
 
 String nativeGreeting(String name) {
   if (nativeExampleLib == null)
