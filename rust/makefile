@@ -2,9 +2,12 @@
 PROJECTNAME=$(shell basename "$(PWD)")
 SOURCES=$(sort $(wildcard ./src/*.rs ./src/**/*.rs))
 
-ANDROID_AARCH64_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(shell uname | tr '[:upper:]' '[:lower:]')-x86_64/bin/aarch64-linux-android26-clang
-ANDROID_ARMV7_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(shell uname | tr '[:upper:]' '[:lower:]')-x86_64/bin/armv7a-linux-androideabi26-clang
-ANDROID_I686_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(shell uname | tr '[:upper:]' '[:lower:]')-x86_64/bin/i686-linux-android26-clang
+OS_NAME=$(shell uname | tr '[:upper:]' '[:lower:]')
+PATH := $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin:$(PATH)
+
+ANDROID_AARCH64_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/aarch64-linux-android29-clang
+ANDROID_ARMV7_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/armv7a-linux-androideabi29-clang
+ANDROID_I686_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/i686-linux-android29-clang
 
 SHELL := /bin/bash
 
@@ -50,13 +53,19 @@ target/universal/release/libexample.a: $(SOURCES) ndk-home
 android: target/aarch64-linux-android/release/libexample.so target/armv7-linux-androideabi/release/libexample.so target/i686-linux-android/release/libexample.so
 
 target/aarch64-linux-android/release/libexample.so: $(SOURCES) ndk-home
-	CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$(ANDROID_AARCH64_LINKER) cargo build --target aarch64-linux-android --release
+	CC_aarch64_linux_android=$(ANDROID_AARCH64_LINKER) \
+	CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$(ANDROID_AARCH64_LINKER) \
+		cargo build --target aarch64-linux-android --release
 
 target/armv7-linux-androideabi/release/libexample.so: $(SOURCES) ndk-home
-	CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=$(ANDROID_ARMV7_LINKER) cargo build --target armv7-linux-androideabi --release
+	CC_armv7_linux_androideabi=$(ANDROID_ARMV7_LINKER) \
+	CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=$(ANDROID_ARMV7_LINKER) \
+		cargo build --target armv7-linux-androideabi --release
 
 target/i686-linux-android/release/libexample.so: $(SOURCES) ndk-home
-	CARGO_TARGET_I686_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) cargo  build --target i686-linux-android --release
+	CC_i686_linux_android=$(ANDROID_I686_LINKER) \
+	CARGO_TARGET_I686_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) \
+		cargo  build --target i686-linux-android --release
 
 .PHONY: ndk-home
 ndk-home:
