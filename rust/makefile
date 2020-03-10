@@ -77,11 +77,8 @@ ndk-home:
 ## bindings: Generate the .h file for iOS
 bindings: target/bindings.h
 
-target/bindings.h: target/bindings.src.h
-	cat $< | grep -v \#include | uniq > $@
-
-target/bindings.src.h: $(SOURCES)
-	cbindgen $^ -c cbindgen.toml -o $@
+target/bindings.h: $(SOURCES)
+	cbindgen $^ -c cbindgen.toml | grep -v \#include | uniq > $@
 
 ## :
 
