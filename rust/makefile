@@ -8,6 +8,7 @@ PATH := $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin:$(PAT
 ANDROID_AARCH64_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/aarch64-linux-android29-clang
 ANDROID_ARMV7_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/armv7a-linux-androideabi29-clang
 ANDROID_I686_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/i686-linux-android29-clang
+ANDROID_X86_64_LINKER=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(OS_NAME)-x86_64/bin/x86_64-linux-android29-clang
 
 SHELL := /bin/bash
 
@@ -26,8 +27,8 @@ help: makefile
 ## init: Install missing dependencies.
 .PHONY: init
 init:
-	rustup target add aarch64-apple-ios armv7-apple-ios armv7s-apple-ios x86_64-apple-ios i386-apple-ios
-	rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+	rustup target add aarch64-apple-ios x86_64-apple-ios
+	rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 	@if [ $$(uname) == "Darwin" ] ; then cargo install cargo-lipo ; fi
 	cargo install cbindgen
 
@@ -50,7 +51,7 @@ target/universal/release/libexample.a: $(SOURCES) ndk-home
 	fi
 
 ## android: Compile the android targets (arm64, armv7 and i686)
-android: target/aarch64-linux-android/release/libexample.so target/armv7-linux-androideabi/release/libexample.so target/i686-linux-android/release/libexample.so
+android: target/aarch64-linux-android/release/libexample.so target/armv7-linux-androideabi/release/libexample.so target/i686-linux-android/release/libexample.so target/x86_64-linux-android/release/libexample.so
 
 target/aarch64-linux-android/release/libexample.so: $(SOURCES) ndk-home
 	CC_aarch64_linux_android=$(ANDROID_AARCH64_LINKER) \
@@ -66,6 +67,11 @@ target/i686-linux-android/release/libexample.so: $(SOURCES) ndk-home
 	CC_i686_linux_android=$(ANDROID_I686_LINKER) \
 	CARGO_TARGET_I686_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) \
 		cargo  build --target i686-linux-android --release
+
+target/x86_64-linux-android/release/libexample.so: $(SOURCES) ndk-home
+    CC_x86_64_linux_android=$(ANDROID_I686_LINKER) \
+    CARGO_TARGET_X86_64_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) \
+        cargo  build --target x86_64-linux-android --release
 
 .PHONY: ndk-home
 ndk-home:
