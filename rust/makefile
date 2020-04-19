@@ -50,7 +50,7 @@ target/universal/release/libexample.a: $(SOURCES) ndk-home
 		else echo "Skipping iOS compilation on $$(uname)" ; \
 	fi
 
-## android: Compile the android targets (arm64, armv7 and i686)
+## android: Compile the android targets (arm64, x86_64, armv7 and i686)
 android: target/aarch64-linux-android/release/libexample.so target/armv7-linux-androideabi/release/libexample.so target/i686-linux-android/release/libexample.so target/x86_64-linux-android/release/libexample.so
 
 target/aarch64-linux-android/release/libexample.so: $(SOURCES) ndk-home
@@ -68,9 +68,9 @@ target/i686-linux-android/release/libexample.so: $(SOURCES) ndk-home
 	CARGO_TARGET_I686_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) \
 		cargo  build --target i686-linux-android --release
 
-target/x86_64-linux-android/release/libexample.so: $(SOURCES) ndk-home
-    CC_x86_64_linux_android=$(ANDROID_I686_LINKER) \
-    CARGO_TARGET_X86_64_LINUX_ANDROID_LINKER=$(ANDROID_I686_LINKER) \
+target/x86-64-linux-android/release/libexample.so: $(SOURCES) ndk-home
+    CC_x86_64_linux_android=$(ANDROID_X86_64_LINKER) \
+    CARGO_TARGET_X86_64_LINUX_ANDROID_LINKER=$(ANDROID_X86_64_LINKER) \
         cargo  build --target x86_64-linux-android --release
 
 .PHONY: ndk-home
