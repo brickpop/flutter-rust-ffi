@@ -81,12 +81,16 @@ $ cat ../rust/target/bindings.h >> Classes/MylibPlugin.h
 
 In our case, it will append `char *rust_greeting(const char *to);` and `void rust_cstr_free(char *s);`
 
-NOTE: By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add a dummy method in `SwiftMylibPlugin.swift` that uses at least one of the native functions:
+NOTE: By default, XCode will skip bundling the `libexample.a` library if it detects that it is not being used. To force its inclusion, add dummy invocations in `SwiftMylibPlugin.swift` that use every single native function that you use from Flutter:
 
 ```kotlin
 ...
   public func dummyMethodToEnforceBundling() {
-    rust_greeting("");
+    rust_greeting("...");
+    compress_jpeg_file("...");
+    compress_png_file("...");
+    // ...
+    // This code will force the bundler to use these functions, but will never be called
   }
 }
 ```
