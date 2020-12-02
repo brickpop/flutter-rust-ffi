@@ -42,6 +42,7 @@ Generated artifacts:
   - `target/aarch64-linux-android/release/libexample.so`
   - `target/armv7-linux-androideabi/release/libexample.so`
   - `target/i686-linux-android/release/libexample.so`
+  - `target/x86_64-linux-android/release/libexample.so`
 - iOS library
   - `target/universal/release/libexample.a`
 - Bindings header
@@ -97,6 +98,8 @@ NOTE: By default, XCode will skip bundling the `libexample.a` library if it dete
 
 If you won't be using Flutter channels, the rest of methods can be left empty.
 
+> Note: Support for avmv7, armv7s and i386 is deprecated. The targets can still be compiled with Rust 1.41 or earlier and by uncommenting the `make init` line on `rust/makefile`
+
 #### Android
 
 Similarly as we did on iOS with `libexample.a`, create symlinks pointing to the binary libraries on `rust/target`.
@@ -111,8 +114,10 @@ src
         │   └── libexample.so@ -> ../../../../../rust/target/aarch64-linux-android/release/libexample.so
         ├── armeabi-v7a
         │   └── libexample.so@ -> ../../../../../rust/target/armv7-linux-androideabi/release/libexample.so
-        └── x86
-            └── libexample.so@ -> ../../../../../rust/target/i686-linux-android/release/libexample.so
+        ├── x86
+        │   └── libexample.so@ -> ../../../../../rust/target/i686-linux-android/release/libexample.so
+        └── x86_64
+            └── libexample.so@ -> ../../../../../rust/target/x86_64-linux-android/release/libexample.so
 ```
 
 As before, if you are not using Flutter channels, the methods within `android/src/main/kotlin/org/mylib/mylib/MylibPlugin.kt` can be left empty.
@@ -124,8 +129,8 @@ In `/lib/mylib.dart`, initialize the function bindings from Dart and implement a
 Load the library: 
 ```dart
 final DynamicLibrary nativeExampleLib = Platform.isAndroid
-    ? DynamicLibrary.open("libexample.so")
-    : DynamicLibrary.process();
+    ? DynamicLibrary.open("libexample.so")   // Load the dynamic library on Android
+    : DynamicLibrary.process();              // Load the static library on iOS
 ```
 
 Find the symbols we want to use, with the appropriate Dart signatures:

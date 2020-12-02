@@ -27,7 +27,8 @@ help: makefile
 ## init: Install missing dependencies.
 .PHONY: init
 init:
-	rustup target add aarch64-apple-ios armv7-apple-ios armv7s-apple-ios x86_64-apple-ios i386-apple-ios
+	rustup target add aarch64-apple-ios x86_64-apple-ios
+	#rustup target add armv7-apple-ios armv7s-apple-ios i386-apple-ios ## deprecated
 	rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 	@if [ $$(uname) == "Darwin" ] ; then cargo install cargo-lipo ; fi
 	cargo install cbindgen
