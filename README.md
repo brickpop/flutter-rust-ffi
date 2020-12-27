@@ -157,7 +157,7 @@ flutter pub run ffigen:setup -I/usr/local/opt/llvm/include -L/usr/local/opt/llvm
 
 **On Linux**:
 ```sh
-sudo apt-get install libclang-dev
+sudo apt-get install -y clang libclang-dev
 flutter pub run ffigen:setup
 ```
 
