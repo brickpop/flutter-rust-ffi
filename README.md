@@ -122,9 +122,53 @@ src
 
 As before, if you are not using Flutter channels, the methods within `android/src/main/kotlin/org/mylib/mylib/MylibPlugin.kt` can be left empty.
 
-### Declare the bindings in Dart
+### Exposing a Dart API to use the bindings
 
-In `/lib/mylib.dart`, initialize the function bindings from Dart and implement any additional logic that you need.
+To invoke the native code: load the library, locate the symbols and `typedef` the Dart functions. You can automate this process from `rust/target/bindings.h` or do it manually.
+
+#### Automatic binding generation
+
+To use [ffigen](https://pub.dev/packages/ffigen), add the dependency in `pubspec.yaml`.
+
+```diff
+ dev_dependencies:
+   flutter_test:
+     sdk: flutter
++  ffigen: ^1.2.0
+```
+
+Also, add the following lines at the end of `pubspec.yaml`:
+
+```yaml
+ffigen:
+  output: lib/bindings.dart
+  headers:
+    entry-points:
+    - rust/target/bindings.h
+  name: GreeterBindings
+  description: Dart bindings to call mylib functions
+```
+
+**On MacOS**:
+```sh
+brew install llvm
+flutter pub run ffigen:setup -I/usr/local/opt/llvm/include -L/usr/local/opt/llvm/lib
+```
+
+**On Linux**:
+```sh
+sudo apt-get install libclang-dev
+flutter pub run ffigen:setup
+```
+
+Generate `lib/bindings.dart`:
+```sh
+flutter pub run ffigen
+```
+
+Finally, use the generated `GreetingBindings` class. An example wrapper [is available here](./lib/mylib.dart).
+
+#### Manual bindings
 
 Load the library: 
 ```dart
