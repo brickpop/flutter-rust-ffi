@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   void initPlatformState() {
     // sync call
-    String response = nativeGreeting("John Smith");
+    String response = Greeter.greet("John Smith");
 
     setState(() {
       _response = response;
