@@ -13,6 +13,7 @@ public class SwiftMylibPlugin: NSObject, FlutterPlugin {
 
   public func dummyMethodToEnforceBundling() {
     // dummy calls to prevent tree shaking
+    rust_cstr_free(nil);
     rust_greeting("");
   }
 }
