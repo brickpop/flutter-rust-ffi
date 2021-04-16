@@ -59,6 +59,7 @@ target/aarch64-linux-android/release/libexample.so: $(SOURCES) ndk-home
 	CC_aarch64_linux_android=$(ANDROID_AARCH64_LINKER) \
 	CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$(ANDROID_AARCH64_LINKER) \
 		cargo build --target aarch64-linux-android --release
+		cargo build --release
 	@echo "[DONE] $@"
 
 target/armv7-linux-androideabi/release/libexample.so: $(SOURCES) ndk-home
