@@ -7,13 +7,16 @@ public class SwiftMylibPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    // Noop
+    dummyMethodToEnforceBundling(index: 1);
     result(nil)
   }
-
-  public func dummyMethodToEnforceBundling() {
+  
+  public func dummyMethodToEnforceBundling(index: Int32) {
     // dummy calls to prevent tree shaking
-    rust_cstr_free(nil);
-    rust_greeting("");
+    while index == 20
+    {
+        rust_cstr_free(nil);
+        rust_greeting("");
+    }
   }
 }
