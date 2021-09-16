@@ -1,45 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="mylib.dart" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/mylib.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="ChangeListManager">
+    <list default="true" id="95cbbe79-87c0-47d7-832e-ed3762dbfa97" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/mylib.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mylib.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mylib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rust/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/rust/makefile" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ToolWindowManager">
-    <editor active="true" />
-    <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-    </layout>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <option name="show-excluded-files" value="false" />
-      </pane>
-    </panes>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qp68kVbaWRd1iyCmBEz49cglPF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="dart.analysis.tool.window.force.activate" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager" selected="Dart Command Line App.main_console.dart">
+    <configuration name="main_console.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main_console.dart" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/example" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95cbbe79-87c0-47d7-832e-ed3762dbfa97" name="Default Changelist" comment="" />
+      <created>1617764026991</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617764026991</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="296" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1617764768078">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state x="296" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.2048.1075@0.23.2048.1075" timestamp="1617764768078" />
+    <state x="512" y="259" key="#main_console.dart" timestamp="1617764764088">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state x="512" y="259" key="#main_console.dart/0.23.2048.1075@0.23.2048.1075" timestamp="1617764764088" />
+    <state width="1295" height="240" key="GridCell.Tab.0.bottom" timestamp="1617764864728">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.0.bottom/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864728" />
+    <state width="1295" height="240" key="GridCell.Tab.0.center" timestamp="1617764864727">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.0.center/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864727" />
+    <state width="1295" height="240" key="GridCell.Tab.0.left" timestamp="1617764864727">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.0.left/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864727" />
+    <state width="1295" height="240" key="GridCell.Tab.0.right" timestamp="1617764864727">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.0.right/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864727" />
+    <state width="1295" height="240" key="GridCell.Tab.1.bottom" timestamp="1617764864728">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.1.bottom/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864728" />
+    <state width="1295" height="240" key="GridCell.Tab.1.center" timestamp="1617764864728">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.1.center/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864728" />
+    <state width="1295" height="240" key="GridCell.Tab.1.left" timestamp="1617764864728">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.1.left/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864728" />
+    <state width="1295" height="240" key="GridCell.Tab.1.right" timestamp="1617764864728">
+      <screen x="0" y="23" width="2048" height="1075" />
+    </state>
+    <state width="1295" height="240" key="GridCell.Tab.1.right/0.23.2048.1075@0.23.2048.1075" timestamp="1617764864728" />
   </component>
 </project>

@@ -13,20 +13,24 @@ class Greeter {
       GreeterBindings(Greeter._loadLibrary());
 
   static DynamicLibrary _loadLibrary() {
-    return Platform.isAndroid
-        ? DynamicLibrary.open(DYNAMIC_LIBRARY_FILE_NAME)
-        : DynamicLibrary.process();
+    if(Platform.isMacOS) {
+      return DynamicLibrary.open("../rust/target/release/libexample.dylib");
+    }else {
+      return Platform.isAndroid
+          ? DynamicLibrary.open(DYNAMIC_LIBRARY_FILE_NAME)
+          : DynamicLibrary.process();
+    }
   }
 
   /// Computes a greeting for the given name using the native function
   static String greet(String name) {
-    final ptrName = Utf8.toUtf8(name).cast<Int8>();
+    final ptrName = name.toNativeUtf8().cast<Int8>();
 
     // Native call
     final ptrResult = _bindings.rust_greeting(ptrName);
 
     // Cast the result pointer to a Dart string
-    final result = Utf8.fromUtf8(ptrResult.cast<Utf8>());
+    final result = ptrResult.cast<Utf8>().toDartString();
 
     // Clone the given result, so that the original string can be freed
     final resultCopy = "" + result;
@@ -39,7 +43,7 @@ class Greeter {
 
   /// Releases the memory allocated to handle the given (result) value
   static void _free(String value) {
-    final ptr = Utf8.toUtf8(value).cast<Int8>();
+    final ptr = value.toNativeUtf8().cast<Int8>();;
     return _bindings.rust_cstr_free(ptr);
   }
 }
