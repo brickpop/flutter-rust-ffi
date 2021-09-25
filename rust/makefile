@@ -28,6 +28,7 @@ help: makefile
 .PHONY: init
 init:
 	rustup target add aarch64-apple-ios x86_64-apple-ios
+	rustup target add aarch64-apple-darwin x86_64-apple-darwin
 	#rustup target add armv7-apple-ios armv7s-apple-ios i386-apple-ios ## deprecated
 	rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 	@if [ $$(uname) == "Darwin" ] ; then cargo install cargo-lipo ; fi
@@ -40,7 +41,7 @@ init:
 # ##############################################################################
 
 ## all: Compile iOS, Android and bindings targets
-all: ios android bindings
+all: ios macos android bindings
 
 ## ios: Compile the iOS universal library
 ios: target/universal/release/libexample.a
@@ -48,6 +49,16 @@ ios: target/universal/release/libexample.a
 target/universal/release/libexample.a: $(SOURCES) ndk-home
 	@if [ $$(uname) == "Darwin" ] ; then \
 		cargo lipo --release ; \
+		else echo "Skipping iOS compilation on $$(uname)" ; \
+	fi
+	@echo "[DONE] $@"
+
+## macos: Compile the macos libraries
+macos: target/x86_64-apple-darwin/release/libexample.dylib
+
+target/x86_64-apple-darwin/release/libexample.dylib: $(SOURCES) ndk-home
+	@if [ $$(uname) == "Darwin" ] ; then \
+		cargo lipo --release --targets x86_64-apple-darwin ; \
 		else echo "Skipping iOS compilation on $$(uname)" ; \
 	fi
 	@echo "[DONE] $@"
