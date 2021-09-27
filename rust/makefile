@@ -53,13 +53,20 @@ target/universal/release/libexample.a: $(SOURCES) ndk-home
 	fi
 	@echo "[DONE] $@"
 
-## macos: Compile the macos libraries
-macos: target/x86_64-apple-darwin/release/libexample.dylib
+## macos: Compile the macOS libraries
+macos: target/x86_64-apple-darwin/release/libexample.dylib target/aarch64-apple-darwin/release/libexample.dylib
 
-target/x86_64-apple-darwin/release/libexample.dylib: $(SOURCES) ndk-home
+target/x86_64-apple-darwin/release/libexample.dylib: $(SOURCES)
 	@if [ $$(uname) == "Darwin" ] ; then \
 		cargo lipo --release --targets x86_64-apple-darwin ; \
-		else echo "Skipping iOS compilation on $$(uname)" ; \
+		else echo "Skipping macOS compilation on $$(uname)" ; \
+	fi
+	@echo "[DONE] $@"
+
+target/aarch64-apple-darwin/release/libexample.dylib: $(SOURCES)
+	@if [ $$(uname) == "Darwin" ] ; then \
+		cargo lipo --release --targets aarch64-apple-darwin ; \
+		else echo "Skipping macOS compilation on $$(uname)" ; \
 	fi
 	@echo "[DONE] $@"
 

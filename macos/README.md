@@ -15,5 +15,3 @@ Invalid argument(s): Failed to lookup symbol (dlsym(RTLD_DEFAULT, rust_greeting)
 You can try changing `example/macos/Podfile` to resolve this error, but there is 
 [one more recipe](https://flutter.dev/docs/development/platform-integration/c-interop#compiled-dynamic-library-macos)
 to do that.
-If you using this sources you need to change Library Search Paths manually 
-(full path to `rust/target/x86_64-apple-darwin/release`)
